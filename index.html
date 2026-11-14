@@ -6,20 +6,16 @@
     <title>طلب مضخة الهواء - SUITU</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Cairo', sans-serif; background-color: #f4f7f6; color: #333; padding: 15px; line-height: 1.6; }
         .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
         h2 { text-align: center; color: #1a202c; margin-bottom: 20px; font-size: 22px; }
         
-        /* قسم المنتج */
         .product-info { background: #f8fafc; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; text-align: center; }
         
-        /* الصورة الرئيسية */
         .main-image-container { width: 100%; max-width: 250px; height: 250px; margin-bottom: 15px; background: #fff; border: 1px solid #cbd5e0; border-radius: 8px; padding: 5px; }
         .main-image-container img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
         
-        /* معرض الصور المصغرة */
         .thumbnail-gallery { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
         .thumbnail-gallery img { width: 60px; height: 60px; object-fit: cover; border: 2px solid transparent; border-radius: 6px; cursor: pointer; transition: 0.2s; background: #fff; padding: 2px; }
         .thumbnail-gallery img:hover { border-color: #cbd5e0; }
@@ -53,21 +49,12 @@
     <h2>اطلب الآن</h2>
     
     <div class="product-info">
-        <!-- الصورة الرئيسية (الكبيرة) -->
         <div class="main-image-container">
-            <img id="mainImage" src="product.jpg" alt="مضخة الهواء SUITU" onerror="this.src='https://via.placeholder.com/250?text=Product'">
+            <img id="mainImage" src="" alt="صورة المنتج">
         </div>
-
-        <!-- معرض الصور المصغرة -->
-        <div class="thumbnail-gallery">
-            <!-- الصورة الأولى (مفعلة افتراضياً) -->
-            <img src="product.jpg" class="active" onclick="changeImage(this, 'product.jpg')" alt="صورة 1">
-            <!-- الصورة الثانية -->
-            <img src="product2.jpg" onclick="changeImage(this, 'product2.jpg')" alt="صورة 2" onerror="this.style.display='none'">
-            <!-- الصورة الثالثة -->
-            <img src="product3.jpg" onclick="changeImage(this, 'product3.jpg')" alt="صورة 3" onerror="this.style.display='none'">
+        <div class="thumbnail-gallery" id="thumbnailGallery">
+            <!-- سيتم توليد الصور المصغرة هنا تلقائياً -->
         </div>
-
         <div class="product-details">
             <h3>مضخة هواء إطارات السيارة SUITU</h3>
             <p class="price">السعر: <span id="productPrice">4200</span> دج</p>
@@ -79,12 +66,10 @@
             <label for="name">اسم العميل الكامل</label>
             <input type="text" id="name" name="اسم_العميل" required placeholder="مثال: محمد أحمد">
         </div>
-
         <div class="form-group">
             <label for="phone">رقم الهاتف</label>
             <input type="tel" id="phone" name="رقم_الهاتف" required placeholder="05XXXXXXXX" pattern="0[5-7][0-9]{8}">
         </div>
-
         <div class="form-group">
             <label for="wilaya">الولاية</label>
             <select id="wilaya" name="الولاية" required>
@@ -145,17 +130,14 @@
                 <option value="58 المنيعة" data-home="950" data-office="550">58 - المنيعة (El Menia)</option>
             </select>
         </div>
-
         <div class="form-group">
             <label for="commune">البلدية / الدائرة</label>
             <input type="text" id="commune" name="البلدية" required>
         </div>
-
         <div class="form-group">
             <label for="address">الحي ورقم المنزل</label>
             <input type="text" id="address" name="العنوان" required>
         </div>
-
         <div class="form-group">
             <label>نوع التوصيل</label>
             <div class="radio-group">
@@ -182,36 +164,54 @@
     const PRODUCT_PRICE = 4200; 
     const ENDPOINT_URL = 'https://formzeron.homiqh3.workers.dev/api/forms/nasrodine/submissions'; 
 
-    // دالة تغيير الصورة عند الضغط على الصورة المصغرة
+    // --- الجزء الجديد: قراءة الصور من ملف gallery.json ---
+    async function loadGallery() {
+        try {
+            const response = await fetch('gallery.json');
+            const data = await response.json();
+            const images = data.images;
+            
+            if (images && images.length > 0) {
+                // تعيين الصورة الرئيسية (أول صورة)
+                document.getElementById('mainImage').src = images[0];
+                
+                // بناء الصور المصغرة
+                const galleryContainer = document.getElementById('thumbnailGallery');
+                images.forEach((imgSrc, index) => {
+                    const img = document.createElement('img');
+                    img.src = imgSrc;
+                    if (index === 0) img.classList.add('active');
+                    img.onclick = function() { changeImage(this, imgSrc); };
+                    galleryContainer.appendChild(img);
+                });
+            }
+        } catch (error) {
+            console.error('Error loading gallery:', error);
+            // في حال فشل تحميل الملف، نضع صورة افتراضية
+            document.getElementById('mainImage').src = 'product.jpg';
+        }
+    }
+
     function changeImage(element, imageSrc) {
-        // تغيير الصورة الكبيرة
         document.getElementById('mainImage').src = imageSrc;
-        
-        // إزالة التفعيل عن جميع الصور المصغرة
-        const thumbnails = document.querySelectorAll('.thumbnail-gallery img');
-        thumbnails.forEach(img => img.classList.remove('active'));
-        
-        // تفعيل الصورة التي تم الضغط عليها
+        document.querySelectorAll('.thumbnail-gallery img').forEach(img => img.classList.remove('active'));
         element.classList.add('active');
     }
+
+    // تشغيل تحميل الصور عند فتح الصفحة
+    document.addEventListener('DOMContentLoaded', loadGallery);
+    // -----------------------------------------------------
 
     function updateSummary() {
         const wilayaSelect = document.getElementById('wilaya');
         const selectedOption = wilayaSelect.options[wilayaSelect.selectedIndex];
         const deliveryType = document.querySelector('input[name="نوع_التوصيل"]:checked').value;
-        
         let shippingPrice = 0;
-        
         if (selectedOption.value) {
-            if (deliveryType === 'المنزل') {
-                shippingPrice = parseInt(selectedOption.dataset.home) || 0;
-            } else {
-                shippingPrice = parseInt(selectedOption.dataset.office) || 0;
-            }
+            if (deliveryType === 'المنزل') shippingPrice = parseInt(selectedOption.dataset.home) || 0;
+            else shippingPrice = parseInt(selectedOption.dataset.office) || 0;
         }
-
         const total = PRODUCT_PRICE + shippingPrice;
-
         document.getElementById('summaryProduct').textContent = PRODUCT_PRICE;
         document.getElementById('summaryShipping').textContent = shippingPrice;
         document.getElementById('summaryTotal').textContent = total;
@@ -222,11 +222,9 @@
 
     document.getElementById('orderForm').addEventListener('submit', function(e) {
         e.preventDefault(); 
-        
         const submitBtn = document.getElementById('submitBtn');
         submitBtn.textContent = 'جاري الإرسال...';
         submitBtn.disabled = true;
-
         const formData = new FormData(this);
         const data = {
             "اسم_العميل": formData.get('اسم_العميل'),
@@ -239,7 +237,6 @@
             "سعر_التوصيل": document.getElementById('summaryShipping').textContent,
             "المجموع_النهائي": document.getElementById('summaryTotal').textContent
         };
-
         fetch(ENDPOINT_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -250,9 +247,7 @@
                 alert('✅ تم استلام طلبك بنجاح! سنتواصل معك قريباً.');
                 this.reset();
                 updateSummary();
-            } else {
-                alert('❌ حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.');
-            }
+            } else alert('❌ حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.');
         })
         .catch(error => {
             alert('❌ فشل الاتصال بالخادم. تحقق من اتصالك بالإنترنت.');
@@ -264,6 +259,5 @@
         });
     });
 </script>
-
 </body>
 </html>
