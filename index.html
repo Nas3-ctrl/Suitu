@@ -8,131 +8,41 @@
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: 'Cairo', sans-serif; 
-            background-color: #f4f7f6; 
-            color: #333; 
-            padding: 15px; 
-            line-height: 1.6;
-        }
-        .container { 
-            max-width: 600px; 
-            margin: 0 auto; 
-            background: #fff; 
-            padding: 20px; 
-            border-radius: 12px; 
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
-        }
-        h2 { 
-            text-align: center; 
-            color: #1a202c; 
-            margin-bottom: 20px; 
-            font-size: 22px;
-        }
+        body { font-family: 'Cairo', sans-serif; background-color: #f4f7f6; color: #333; padding: 15px; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+        h2 { text-align: center; color: #1a202c; margin-bottom: 20px; font-size: 22px; }
         
-        .product-info { 
-            display: flex; 
-            align-items: center; 
-            gap: 15px; 
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 20px; 
-            border: 1px solid #e2e8f0;
-        }
-        .product-info img { 
-            width: 100px; 
-            height: 100px; 
-            object-fit: contain; 
-            border-radius: 8px; 
-            background: #fff;
-            border: 1px solid #cbd5e0;
-            padding: 5px;
-        }
-        .product-details h3 { margin-bottom: 8px; font-size: 16px; color: #2d3748; }
-        .price { color: #e53e3e; font-weight: 700; font-size: 18px; }
+        /* قسم المنتج */
+        .product-info { background: #f8fafc; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        
+        /* الصورة الرئيسية */
+        .main-image-container { width: 100%; max-width: 250px; height: 250px; margin-bottom: 15px; background: #fff; border: 1px solid #cbd5e0; border-radius: 8px; padding: 5px; }
+        .main-image-container img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+        
+        /* معرض الصور المصغرة */
+        .thumbnail-gallery { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
+        .thumbnail-gallery img { width: 60px; height: 60px; object-fit: cover; border: 2px solid transparent; border-radius: 6px; cursor: pointer; transition: 0.2s; background: #fff; padding: 2px; }
+        .thumbnail-gallery img:hover { border-color: #cbd5e0; }
+        .thumbnail-gallery img.active { border-color: #3182ce; }
+
+        .product-details h3 { margin-bottom: 8px; font-size: 18px; color: #2d3748; }
+        .price { color: #e53e3e; font-weight: 700; font-size: 20px; }
 
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 8px; font-weight: 600; color: #4a5568; font-size: 14px;}
-        input[type="text"], input[type="tel"], select { 
-            width: 100%; 
-            padding: 12px; 
-            border: 1px solid #cbd5e0; 
-            border-radius: 8px; 
-            font-family: 'Cairo', sans-serif;
-            font-size: 15px;
-            transition: border-color 0.3s;
-            background-color: #fff;
-        }
-        input[type="text"]:focus, input[type="tel"]:focus, select:focus {
-            border-color: #3182ce;
-            outline: none;
-        }
+        input[type="text"], input[type="tel"], select { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 15px; transition: border-color 0.3s; background-color: #fff; }
+        input[type="text"]:focus, input[type="tel"]:focus, select:focus { border-color: #3182ce; outline: none; }
 
-        .radio-group { 
-            display: flex; 
-            gap: 10px; 
-            margin-top: 5px;
-        }
-        .radio-label { 
-            flex: 1;
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            gap: 5px; 
-            padding: 12px;
-            border: 1px solid #cbd5e0;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
+        .radio-group { display: flex; gap: 10px; margin-top: 5px; }
+        .radio-label { flex: 1; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; font-size: 14px; }
         .radio-label input { margin-left: 5px; }
-        .radio-label:has(input:checked) {
-            border-color: #3182ce;
-            background-color: #ebf8ff;
-            color: #2b6cb0;
-        }
+        .radio-label:has(input:checked) { border-color: #3182ce; background-color: #ebf8ff; color: #2b6cb0; }
 
-        .summary { 
-            background: #f0fdf4; 
-            padding: 15px; 
-            border-radius: 10px; 
-            margin-top: 20px; 
-            border: 1px solid #bbf7d0;
-        }
-        .summary p { 
-            margin: 8px 0; 
-            display: flex; 
-            justify-content: space-between; 
-            font-weight: 600;
-            color: #276749;
-            font-size: 15px;
-        }
-        .total { 
-            font-size: 18px; 
-            font-weight: 700; 
-            color: #e53e3e; 
-            border-top: 2px dashed #bbf7d0; 
-            padding-top: 15px; 
-            margin-top: 15px; 
-        }
+        .summary { background: #f0fdf4; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #bbf7d0; }
+        .summary p { margin: 8px 0; display: flex; justify-content: space-between; font-weight: 600; color: #276749; font-size: 15px; }
+        .total { font-size: 18px; font-weight: 700; color: #e53e3e; border-top: 2px dashed #bbf7d0; padding-top: 15px; margin-top: 15px; }
 
-        button { 
-            width: 100%; 
-            padding: 15px; 
-            background: #38a169; 
-            color: white; 
-            border: none; 
-            border-radius: 8px; 
-            font-size: 18px; 
-            font-family: 'Cairo', sans-serif;
-            font-weight: 700; 
-            cursor: pointer; 
-            margin-top: 20px; 
-            transition: background 0.3s;
-        }
+        button { width: 100%; padding: 15px; background: #38a169; color: white; border: none; border-radius: 8px; font-size: 18px; font-family: 'Cairo', sans-serif; font-weight: 700; cursor: pointer; margin-top: 20px; transition: background 0.3s; }
         button:hover { background: #2f855a; }
         button:disabled { background: #a0aec0; cursor: not-allowed; }
     </style>
@@ -143,7 +53,21 @@
     <h2>اطلب الآن</h2>
     
     <div class="product-info">
-        <img src="product.jpg" alt="مضخة الهواء SUITU" onerror="this.src='https://via.placeholder.com/100?text=Product'">
+        <!-- الصورة الرئيسية (الكبيرة) -->
+        <div class="main-image-container">
+            <img id="mainImage" src="product.jpg" alt="مضخة الهواء SUITU" onerror="this.src='https://via.placeholder.com/250?text=Product'">
+        </div>
+
+        <!-- معرض الصور المصغرة -->
+        <div class="thumbnail-gallery">
+            <!-- الصورة الأولى (مفعلة افتراضياً) -->
+            <img src="product.jpg" class="active" onclick="changeImage(this, 'product.jpg')" alt="صورة 1">
+            <!-- الصورة الثانية -->
+            <img src="product2.jpg" onclick="changeImage(this, 'product2.jpg')" alt="صورة 2" onerror="this.style.display='none'">
+            <!-- الصورة الثالثة -->
+            <img src="product3.jpg" onclick="changeImage(this, 'product3.jpg')" alt="صورة 3" onerror="this.style.display='none'">
+        </div>
+
         <div class="product-details">
             <h3>مضخة هواء إطارات السيارة SUITU</h3>
             <p class="price">السعر: <span id="productPrice">4200</span> دج</p>
@@ -256,9 +180,20 @@
 
 <script>
     const PRODUCT_PRICE = 4200; 
-    // تم إضافة متغير لاسم المنتج ليتم إرساله
-    const PRODUCT_NAME = "مضخة هواء إطارات السيارة SUITU"; 
     const ENDPOINT_URL = 'https://formzeron.homiqh3.workers.dev/api/forms/nasrodine/submissions'; 
+
+    // دالة تغيير الصورة عند الضغط على الصورة المصغرة
+    function changeImage(element, imageSrc) {
+        // تغيير الصورة الكبيرة
+        document.getElementById('mainImage').src = imageSrc;
+        
+        // إزالة التفعيل عن جميع الصور المصغرة
+        const thumbnails = document.querySelectorAll('.thumbnail-gallery img');
+        thumbnails.forEach(img => img.classList.remove('active'));
+        
+        // تفعيل الصورة التي تم الضغط عليها
+        element.classList.add('active');
+    }
 
     function updateSummary() {
         const wilayaSelect = document.getElementById('wilaya');
@@ -300,21 +235,14 @@
             "البلدية": formData.get('البلدية'),
             "العنوان": formData.get('العنوان'),
             "نوع_التوصيل": formData.get('نوع_التوصيل'),
-            
-            // تمت إضافة اسم المنتج وسعره هنا
-            "اسم_المنتج": PRODUCT_NAME,
             "سعر_المنتج": PRODUCT_PRICE,
-            
             "سعر_التوصيل": document.getElementById('summaryShipping').textContent,
             "المجموع_النهائي": document.getElementById('summaryTotal').textContent
         };
 
         fetch(ENDPOINT_URL, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify(data)
         })
         .then(response => {
@@ -338,4 +266,4 @@
 </script>
 
 </body>
-        </html>
+</html>
