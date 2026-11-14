@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب مضخة الهواء - SUITU</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background-color: #f4f7f6; 
+            color: #333; 
+            padding: 15px; 
+            line-height: 1.6;
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: #fff; 
+            padding: 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
+        }
+        h2 { 
+            text-align: center; 
+            color: #1a202c; 
+            margin-bottom: 20px; 
+            font-size: 22px;
+        }
+        
+        /* قسم المنتج */
+        .product-info { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px; 
+            border: 1px solid #e2e8f0;
+        }
+        .product-info img { 
+            width: 100px; 
+            height: 100px; 
+            object-fit: contain; 
+            border-radius: 8px; 
+            background: #fff;
+            border: 1px solid #cbd5e0;
+            padding: 5px;
+        }
+        .product-details h3 { margin-bottom: 8px; font-size: 16px; color: #2d3748; }
+        .price { color: #e53e3e; font-weight: 700; font-size: 18px; }
+
+        /* حقول الإدخال */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #4a5568; font-size: 14px;}
+        input[type="text"], input[type="tel"], select { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid #cbd5e0; 
+            border-radius: 8px; 
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            transition: border-color 0.3s;
+            background-color: #fff;
+        }
+        input[type="text"]:focus, input[type="tel"]:focus, select:focus {
+            border-color: #3182ce;
+            outline: none;
+        }
+
+        /* أزرار التوصيل */
+        .radio-group { 
+            display: flex; 
+            gap: 10px; 
+            margin-top: 5px;
+        }
+        .radio-label { 
+            flex: 1;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            gap: 5px; 
+            padding: 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .radio-label input { margin-left: 5px; }
+        .radio-label:has(input:checked) {
+            border-color: #3182ce;
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+        }
+
+        /* ملخص الطلب */
+        .summary { 
+            background: #f0fdf4; 
+            padding: 15px; 
+            border-radius: 10px; 
+            margin-top: 20px; 
+            border: 1px solid #bbf7d0;
+        }
+        .summary p { 
+            margin: 8px 0; 
+            display: flex; 
+            justify-content: space-between; 
+            font-weight: 600;
+            color: #276749;
+            font-size: 15px;
+        }
+        .total { 
+            font-size: 18px; 
+            font-weight: 700; 
+            color: #e53e3e; 
+            border-top: 2px dashed #bbf7d0; 
+            padding-top: 15px; 
+            margin-top: 15px; 
+        }
+
+        /* زر الإرسال */
+        button { 
+            width: 100%; 
+            padding: 15px; 
+            background: #38a169; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 18px; 
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700; 
+            cursor: pointer; 
+            margin-top: 20px; 
+            transition: background 0.3s;
+        }
+        button:hover { background: #2f855a; }
+        button:disabled { background: #a0aec0; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>اطلب الآن</h2>
+    
+    <!-- معلومات المنتج -->
+    <div class="product-info">
+        <!-- هنا سيتم جلب الصورة التي سترفعها باسم product.jpg -->
+        <img src="product.jpg" alt="مضخة الهواء SUITU" onerror="this.src='https://via.placeholder.com/100?text=Product'">
+        <div class="product-details">
+            <h3>مضخة هواء إطارات السيارة SUITU</h3>
+            <p class="price">السعر: <span id="productPrice">4200</span> دج</p>
+        </div>
+    </div>
+
+    <!-- النموذج -->
+    <form id="orderForm">
+        
+        <div class="form-group">
+            <label for="name">اسم العميل الكامل</label>
+            <input type="text" id="name" name="اسم_العميل" required placeholder="مثال: محمد أحمد">
+        </div>
+
+        <div class="form-group">
+            <label for="phone">رقم الهاتف</label>
+            <input type="tel" id="phone" name="رقم_الهاتف" required placeholder="05XXXXXXXX" pattern="0[5-7][0-9]{8}">
+        </div>
+
+        <div class="form-group">
+            <label for="wilaya">الولاية</label>
+            <select id="wilaya" name="الولاية" required>
+                <option value="">-- اختر الولاية --</option>
+                <option value="1 أدرار" data-home="1100" data-office="550">01 - أدرار (Adrar)</option>
+                <option value="2 الشلف" data-home="650" data-office="350">02 - الشلف (Chlef)</option>
+                <option value="3 الأغواط" data-home="800" data-office="350">03 - الأغواط (Laghouat)</option>
+                <option value="4 أم البواقي" data-home="650" data-office="350">04 - أم البواقي (El Bouaghi)</option>
+                <option value="5 باتنة" data-home="650" data-office="350">05 - باتنة (Batna)</option>
+                <option value="6 بجاية" data-home="600" data-office="350">06 - بجاية (Béjaïa)</option>
+                <option value="7 بسكرة" data-home="700" data-office="350">07 - بسكرة (Biskra)</option>
+                <option value="8 بشار" data-home="900" data-office="500">08 - بشار (Bechar)</option>
+                <option value="9 البليدة" data-home="450" data-office="450">09 - البليدة (Blida)</option>
+                <option value="10 البويرة" data-home="600" data-office="350">10 - البويرة (Bouira)</option>
+                <option value="11 تمنراست" data-home="1500" data-office="700">11 - تمنراست (Tamanrasset)</option>
+                <option value="12 تبسة" data-home="700" data-office="350">12 - تبسة (Tebessa)</option>
+                <option value="13 تلمسان" data-home="650" data-office="350">13 - تلمسان (Tlemcen)</option>
+                <option value="14 تيارت" data-home="700" data-office="350">14 - تيارت (Tiaret)</option>
+                <option value="15 تيزي وزو" data-home="600" data-office="350">15 - تيزي وزو (Tizi Ouzou)</option>
+                <option value="16 الجزائر" data-home="300" data-office="300">16 - الجزائر (Alger)</option>
+                <option value="17 الجلفة" data-home="800" data-office="450">17 - الجلفة (Djelfa)</option>
+                <option value="18 جيجل" data-home="650" data-office="350">18 - جيجل (Jijel)</option>
+                <option value="19 سطيف" data-home="650" data-office="350">19 - سطيف (Setif)</option>
+                <option value="20 سعيدة" data-home="700" data-office="350">20 - سعيدة (Saida)</option>
+                <option value="21 سكيكدة" data-home="650" data-office="350">21 - سكيكدة (Skikda)</option>
+                <option value="22 سيدي بلعباس" data-home="650" data-office="350">22 - سيدي بلعباس (Sidi Bel-Abbès)</option>
+                <option value="23 عنابة" data-home="650" data-office="350">23 - عنابة (Annaba)</option>
+                <option value="24 قالمة" data-home="700" data-office="350">24 - قالمة (Guelma)</option>
+                <option value="25 قسنطينة" data-home="650" data-office="350">25 - قسنطينة (Constantine)</option>
+                <option value="26 المدية" data-home="600" data-office="350">26 - المدية (Médéa)</option>
+                <option value="27 مستغانم" data-home="650" data-office="350">27 - مستغانم (Mostaganem)</option>
+                <option value="28 المسيلة" data-home="700" data-office="350">28 - المسيلة (Msila)</option>
+                <option value="29 معسكر" data-home="650" data-office="350">29 - معسكر (Mascara)</option>
+                <option value="30 ورقلة" data-home="900" data-office="450">30 - ورقلة (Ouargla)</option>
+                <option value="31 وهران" data-home="600" data-office="350">31 - وهران (Oran)</option>
+                <option value="32 البيض" data-home="1000" data-office="800">32 - البيض (El Bayadh)</option>
+                <option value="34 برج بوعريريج" data-home="650" data-office="350">34 - برج بوعريريج (BBA)</option>
+                <option value="35 بومرداس" data-home="400" data-office="400">35 - بومرداس (Boumerdes)</option>
+                <option value="36 الطارف" data-home="700" data-office="350">36 - الطارف (Tarf)</option>
+                <option value="37 تندوف" data-home="1300" data-office="1300">37 - تندوف (Tindouf)</option>
+                <option value="38 تيسمسيلت" data-home="650" data-office="350">38 - تيسمسيلت (Tissemsilt)</option>
+                <option value="39 الوادي" data-home="900" data-office="500">39 - الوادي (El Oued)</option>
+                <option value="40 خنشلة" data-home="700" data-office="350">40 - خنشلة (Khenchela)</option>
+                <option value="41 سوق أهراس" data-home="750" data-office="400">41 - سوق أهراس (Souk Ahras)</option>
+                <option value="42 تيبازة" data-home="400" data-office="300">42 - تيبازة (Tipaza)</option>
+                <option value="43 ميلة" data-home="700" data-office="400">43 - ميلة (Mila)</option>
+                <option value="44 عين الدفلى" data-home="650" data-office="350">44 - عين الدفلى (Ain Defla)</option>
+                <option value="45 النعامة" data-home="900" data-office="450">45 - النعامة (Naama)</option>
+                <option value="46 عين تموشنت" data-home="650" data-office="400">46 - عين تموشنت (Ain Temouchent)</option>
+                <option value="47 غرداية" data-home="800" data-office="450">47 - غرداية (Ghardaia)</option>
+                <option value="48 غليزان" data-home="750" data-office="400">48 - غليزان (Relizane)</option>
+                <option value="49 تيميمون" data-home="1200" data-office="750">49 - تيميمون (Timimoun)</option>
+                <option value="51 أولاد جلال" data-home="850" data-office="550">51 - أولاد جلال (Ouled Djellal)</option>
+                <option value="52 بني عباس" data-home="1000" data-office="1000">52 - بني عباس (Béni Abbés)</option>
+                <option value="53 عين صالح" data-home="1600" data-office="900">53 - عين صالح (In Salah)</option>
+                <option value="55 تقرت" data-home="850" data-office="450">55 - تقرت (Touggourt)</option>
+                <option value="57 المغير" data-home="950" data-office="500">57 - المغير (El Mghaier)</option>
+                <option value="58 المنيعة" data-home="950" data-office="550">58 - المنيعة (El Menia)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="commune">البلدية / الدائرة</label>
+            <input type="text" id="commune" name="البلدية" required>
+        </div>
+
+        <div class="form-group">
+            <label for="address">الحي ورقم المنزل</label>
+            <input type="text" id="address" name="العنوان" required>
+        </div>
+
+        <div class="form-group">
+            <label>نوع التوصيل</label>
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" name="نوع_التوصيل" value="المنزل" checked onchange="updateSummary()"> إلى المنزل
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="نوع_التوصيل" value="المكتب" onchange="updateSummary()"> إلى المكتب
+                </label>
+            </div>
+        </div>
+
+        <!-- ملخص الطلب -->
+        <div class="summary">
+            <p><span>سعر المنتج:</span> <span id="summaryProduct">4200</span> دج</p>
+            <p><span>سعر التوصيل:</span> <span id="summaryShipping">0</span> دج</p>
+            <p class="total"><span>المجموع النهائي:</span> <span id="summaryTotal">4200</span> دج</p>
+        </div>
+
+        <button type="submit" id="submitBtn">تأكيد الطلب</button>
+    </form>
+</div>
+
+<script>
+    const PRODUCT_PRICE = 4200; 
+    const ENDPOINT_URL = 'https://formzeron.homiqh3.workers.dev/api/forms/nasrodine/submissions'; 
+
+    function updateSummary() {
+        const wilayaSelect = document.getElementById('wilaya');
+        const selectedOption = wilayaSelect.options[wilayaSelect.selectedIndex];
+        const deliveryType = document.querySelector('input[name="نوع_التوصيل"]:checked').value;
+        
+        let shippingPrice = 0;
+        
+        if (selectedOption.value) {
+            if (deliveryType === 'المنزل') {
+                shippingPrice = parseInt(selectedOption.dataset.home) || 0;
+            } else {
+                shippingPrice = parseInt(selectedOption.dataset.office) || 0;
+            }
+        }
+
+        const total = PRODUCT_PRICE + shippingPrice;
+
+        document.getElementById('summaryProduct').textContent = PRODUCT_PRICE;
+        document.getElementById('summaryShipping').textContent = shippingPrice;
+        document.getElementById('summaryTotal').textContent = total;
+    }
+
+    document.getElementById('wilaya').addEventListener('change', updateSummary);
+    document.addEventListener('DOMContentLoaded', updateSummary);
+
+    // إرسال البيانات
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+        e.preventDefault(); 
+        
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.textContent = 'جاري الإرسال...';
+        submitBtn.disabled = true;
+
+        const formData = new FormData(this);
+        const data = {
+            "اسم_العميل": formData.get('اسم_العميل'),
+            "رقم_الهاتف": formData.get('رقم_الهاتف'),
+            "الولاية": formData.get('الولاية'),
+            "البلدية": formData.get('البلدية'),
+            "العنوان": formData.get('العنوان'),
+            "نوع_التوصيل": formData.get('نوع_التوصيل'),
+            "سعر_المنتج": PRODUCT_PRICE,
+            "سعر_التوصيل": document.getElementById('summaryShipping').textContent,
+            "المجموع_النهائي": document.getElementById('summaryTotal').textContent
+        };
+
+        fetch(ENDPOINT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('✅ تم استلام طلبك بنجاح! سنتواصل معك قريباً.');
+                this.reset();
+                updateSummary();
+            } else {
+                alert('❌ حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.');
+            }
+        })
+        .catch(error => {
+            alert('❌ فشل الاتصال بالخادم. تحقق من اتصالك بالإنترنت.');
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            submitBtn.textContent = 'تأكيد الطلب';
+            submitBtn.disabled = false;
+        });
+    });
+</script>
+
+</body>
+</html>
